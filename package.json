@@ -1,0 +1,13 @@
+{
+  "name": "vynest-backend",
+  "version": "1.0.0",
+  "private": true,
+  "main": "functions/index.js",
+  "scripts": {
+    "dev": "wrangler pages dev .",
+    "deploy": "wrangler pages deploy ."
+  },
+  "devDependencies": {
+    "wrangler": "^3.95.0"
+  }
+}
