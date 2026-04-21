@@ -1,13 +1,14 @@
 {
   "name": "vynest-backend",
   "version": "1.0.0",
-  "private": true,
-  "main": "functions/index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "start": "node server.js"
   },
-  "devDependencies": {
-    "wrangler": "^4.83.0"
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "cashfree-pg": "^4.0.0",
+    "firebase-admin": "^11.0.0"
   }
 }
