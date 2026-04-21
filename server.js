@@ -8,8 +8,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const requiredEnv = (value, name) => {
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+
+  return value;
+};
+
 // 🔐 FIREBASE ADMIN
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = JSON.parse(
+  requiredEnv(process.env.FIREBASE_SERVICE_ACCOUNT_JSON, "FIREBASE_SERVICE_ACCOUNT_JSON"),
+);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -17,10 +27,14 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
- const CLIENT_ID = "11956334df025c191586fd794b13365911";
-const CLIENT_SECRET = "cfsk_ma_prod_581a6cbc064f6c2b2214fa5d8d589b46_2f768c0b";
+const CLIENT_ID = requiredEnv(process.env.CASHFREE_CLIENT_ID, "CASHFREE_CLIENT_ID");
+const CLIENT_SECRET = requiredEnv(
+  process.env.CASHFREE_CLIENT_SECRET,
+  "CASHFREE_CLIENT_SECRET",
+);
 
-
+Cashfree.XClientId = CLIENT_ID;
+Cashfree.XClientSecret = CLIENT_SECRET;
 Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
 
 // ✅ CREATE ORDER
