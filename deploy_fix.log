@@ -1,0 +1,171 @@
+🪵  Writing logs to "/home/purrs/.config/.wrangler/logs/wrangler-2026-04-22_19-40-39_629.log"
+.env file not found at "/home/purrs/vynest/vynest-backend/.env". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+.env file not found at "/home/purrs/vynest/vynest-backend/.env.local". Continuing... For more details, refer to https://developers.cloudflare.com/workers/wrangler/system-environment-variables/
+
+ ⛅️ wrangler 4.83.0 (update available 4.84.1)
+─────────────────────────────────────────────
+Metrics dispatcher: Posting data {"deviceId":"ad01b3a8-e97e-4e25-9e16-260ca41341b8","event":"wrangler command started","timestamp":1776886839778,"properties":{"amplitude_session_id":1776886839776,"amplitude_event_id":0,"wranglerVersion":"4.83.0","wranglerMajorVersion":4,"wranglerMinorVersion":83,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#13-Ubuntu SMP PREEMPT_DYNAMIC Wed Apr  8 06:46:04 UTC 2026","nodeVersion":22,"packageManager":"npm","isFirstUsage":false,"configFileType":"toml","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"vscode-copilot-agent","argsUsed":[],"argsCombination":"","sanitizedCommand":"deploy","sanitizedArgs":{}}}
+Metrics dispatcher: Posting data {"deviceId":"ad01b3a8-e97e-4e25-9e16-260ca41341b8","event":"autoconfig_process_started","timestamp":1776886839791,"properties":{"amplitude_session_id":1776886839791,"amplitude_event_id":0,"wranglerVersion":"4.83.0","wranglerMajorVersion":4,"wranglerMinorVersion":83,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#13-Ubuntu SMP PREEMPT_DYNAMIC Wed Apr  8 06:46:04 UTC 2026","nodeVersion":22,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"vscode-copilot-agent","category":"Workers","os":"linux:x64","autoConfigId":"7d6e9f9d-629b-40ea-a644-d892386e9afc","command":"wrangler deploy","dryRun":false}}
+Running autoconfig detection in /home/purrs/vynest/vynest-backend...
+Metrics dispatcher: Posting data {"deviceId":"ad01b3a8-e97e-4e25-9e16-260ca41341b8","event":"autoconfig_detection_started","timestamp":1776886839793,"properties":{"amplitude_session_id":1776886839793,"amplitude_event_id":0,"wranglerVersion":"4.83.0","wranglerMajorVersion":4,"wranglerMinorVersion":83,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#13-Ubuntu SMP PREEMPT_DYNAMIC Wed Apr  8 06:46:04 UTC 2026","nodeVersion":22,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"vscode-copilot-agent","category":"Workers","os":"linux:x64","autoConfigId":"7d6e9f9d-629b-40ea-a644-d892386e9afc","command":"wrangler deploy"}}
+Metrics dispatcher: Posting data {"deviceId":"ad01b3a8-e97e-4e25-9e16-260ca41341b8","event":"autoconfig_process_ended","timestamp":1776886839806,"properties":{"amplitude_session_id":1776886839806,"amplitude_event_id":0,"wranglerVersion":"4.83.0","wranglerMajorVersion":4,"wranglerMinorVersion":83,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#13-Ubuntu SMP PREEMPT_DYNAMIC Wed Apr  8 06:46:04 UTC 2026","nodeVersion":22,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"vscode-copilot-agent","category":"Workers","os":"linux:x64","autoConfigId":"7d6e9f9d-629b-40ea-a644-d892386e9afc","command":"wrangler deploy","dryRun":false,"success":true}}
+Starting verifyWorkerMatchesCITag() with tag: undefined, name: vynest-backend
+No WRANGLER_CI_MATCH_TAG variable provided, aborting verifyWorkerMatchesCITag()
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/services/vynest-backend
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+Metrics dispatcher: Failed to send request: fetch failed
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/services/vynest-backend/environments/production/bindings
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/services/vynest-backend/environments/production/routes?show_zonename=true
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/domains/records?page=0&per_page=5&service=vynest-backend&environment=production
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/services/vynest-backend/environments/production/subdomain
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/services/vynest-backend/environments/production
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/schedules
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mThe local configuration being used (generated from your local configuration file) differs from the remote configuration of your Worker set via the Cloudflare Dashboard:[0m
+
+   {
+     vars: {
+  [31m-    PAYMENT_TEST_AMOUNT: "1"[39m
+     }
+   }
+  
+  
+  Deploying the Worker will override the remote configuration with your local one.
+
+
+? Would you like to continue?
+🤖 Using fallback value in non-interactive context: yes
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/deployments
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+Total Upload: 23.56 KiB / gzip: 5.71 KiB
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/settings
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/versions
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+BODY: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/deployments
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: PATCH https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/script-settings
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+Uploaded vynest-backend (11.49 sec)
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/subdomain
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/subdomain
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+-- START CF API REQUEST: POST https://api.cloudflare.com/client/v4/accounts/ca66df57d3c112d781de981b3a0a2b3e/workers/scripts/vynest-backend/subdomain
+QUERY STRING: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API REQUEST
+-- START CF API RESPONSE: OK 200
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+-- END CF API RESPONSE
+Deployed vynest-backend triggers (6.42 sec)
+  https://vynest-backend.vynest750.workers.dev
+Current Version ID: 50d15285-4a7d-4006-ad04-8beb59bf9760
+Metrics dispatcher: Posting data {"deviceId":"ad01b3a8-e97e-4e25-9e16-260ca41341b8","event":"deploy worker script","timestamp":1776886863159,"properties":{"amplitude_session_id":1776886863158,"amplitude_event_id":0,"wranglerVersion":"4.83.0","wranglerMajorVersion":4,"wranglerMinorVersion":83,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#13-Ubuntu SMP PREEMPT_DYNAMIC Wed Apr  8 06:46:04 UTC 2026","nodeVersion":22,"packageManager":"npm","isFirstUsage":false,"configFileType":"none","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"vscode-copilot-agent","category":"Workers","os":"linux:x64","usesTypeScript":false,"durationMs":23333}}
+Metrics dispatcher: Posting data {"deviceId":"ad01b3a8-e97e-4e25-9e16-260ca41341b8","event":"wrangler command completed","timestamp":1776886863160,"properties":{"amplitude_session_id":1776886839776,"amplitude_event_id":1,"wranglerVersion":"4.83.0","wranglerMajorVersion":4,"wranglerMinorVersion":83,"wranglerPatchVersion":0,"osPlatform":"Linux","osVersion":"#13-Ubuntu SMP PREEMPT_DYNAMIC Wed Apr  8 06:46:04 UTC 2026","nodeVersion":22,"packageManager":"npm","isFirstUsage":false,"configFileType":"toml","isCI":false,"isPagesCI":false,"isWorkersCI":false,"isInteractive":false,"hasAssets":false,"agent":"vscode-copilot-agent","argsUsed":[],"argsCombination":"","sanitizedCommand":"deploy","sanitizedArgs":{},"durationMs":23396}}
