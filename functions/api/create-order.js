@@ -5,6 +5,8 @@ import { isValidDateInput, resolveBookingAmount } from "../_lib/payment";
 
 export const onRequestOptions = async ({ env }) => optionsResponse(env);
 
+const FALLBACK_CUSTOMER_PHONE = "7054364074";
+
 const normalizeCustomerPhone = (value) => {
   const digits = String(value || "").replace(/\D/g, "");
 
@@ -16,7 +18,23 @@ const normalizeCustomerPhone = (value) => {
     return digits.slice(2);
   }
 
-  return "9999999999";
+  return FALLBACK_CUSTOMER_PHONE;
+};
+
+const resolveCustomerPhone = (payloadPhone, userPhone) => {
+  const normalizedPayloadPhone = normalizeCustomerPhone(payloadPhone);
+
+  if (normalizedPayloadPhone !== FALLBACK_CUSTOMER_PHONE) {
+    return normalizedPayloadPhone;
+  }
+
+  const normalizedUserPhone = normalizeCustomerPhone(userPhone);
+
+  if (normalizedUserPhone !== FALLBACK_CUSTOMER_PHONE) {
+    return normalizedUserPhone;
+  }
+
+  return FALLBACK_CUSTOMER_PHONE;
 };
 
 export const onRequestPost = async ({ request, env }) => {
@@ -41,7 +59,10 @@ export const onRequestPost = async ({ request, env }) => {
       return jsonResponse(env, 400, { error: "Missing fields" });
     }
 
-    const room = await getDocument(env, "rooms", roomId);
+    const [room, user] = await Promise.all([
+      getDocument(env, "rooms", roomId),
+      getDocument(env, "users", userId)
+    ]);
 
     if (!room) {
       return jsonResponse(env, 404, { error: "Room not found" });
@@ -80,7 +101,7 @@ export const onRequestPost = async ({ request, env }) => {
         order_currency: "INR",
         customer_details: {
           customer_id: userId,
-          customer_phone: normalizeCustomerPhone(payload?.customerPhone)
+          customer_phone: resolveCustomerPhone(payload?.customerPhone, user?.phone)
         },
         order_meta: {
           return_url: returnUrl,

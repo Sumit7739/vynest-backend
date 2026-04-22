@@ -1,0 +1,10 @@
+
+ ⛅️ wrangler 4.84.1
+───────────────────
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+Total Upload: 25.12 KiB / gzip: 6.13 KiB
+Uploaded vynest-backend (13.01 sec)
+Deployed vynest-backend triggers (6.19 sec)
+  https://vynest-backend.vynest750.workers.dev
+Current Version ID: 794ce033-5b2c-467f-991a-02711528b497

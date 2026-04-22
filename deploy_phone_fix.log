@@ -1,0 +1,22 @@
+
+ ⛅️ wrangler 4.83.0
+───────────────────
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mThe local configuration being used (generated from your local configuration file) differs from the remote configuration of your Worker set via the Cloudflare Dashboard:[0m
+
+   {
+     vars: {
+  [31m-    PAYMENT_TEST_AMOUNT: "1"[39m
+     }
+   }
+  
+  
+  Deploying the Worker will override the remote configuration with your local one.
+
+
+? Would you like to continue?
+🤖 Using fallback value in non-interactive context: yes
+Total Upload: 25.04 KiB / gzip: 6.10 KiB
+Uploaded vynest-backend (11.22 sec)
+Deployed vynest-backend triggers (6.42 sec)
+  https://vynest-backend.vynest750.workers.dev
+Current Version ID: 7a472a2a-163c-4943-ae64-352f3594b51a
