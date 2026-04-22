@@ -55,7 +55,7 @@ app.post("/create-order", async (req, res) => {
       customer_details: {
         customer_id: userId,
         customer_email: "user@gmail.com",
-        customer_phone: "9999999999",
+        customer_phone: "+91 7054364074",
       },
     });
 

@@ -62,7 +62,7 @@ export const onRequestPost = async ({ request, env }) => {
         order_currency: "INR",
         customer_details: {
           customer_id: userId,
-          customer_phone: "9999999999"
+          customer_phone: "+91 70543 64074"
         }
       })
     });
