@@ -37,16 +37,60 @@ Cashfree.XClientId = CLIENT_ID;
 Cashfree.XClientSecret = CLIENT_SECRET;
 Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
 
+const normalizeCustomerPhone = (value) => {
+  const digits = String(value || "").replace(/\D/g, "");
+
+  if (digits.length === 10) return digits;
+  if (digits.length === 12 && digits.startsWith("91")) return digits.slice(2);
+
+  return null;
+};
+
+const normalizeCustomerEmail = (value) => {
+  const email = String(value || "").trim().toLowerCase();
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return isValidEmail ? email : null;
+};
+
+const getBearerToken = (req) => {
+  const authHeader = req.headers.authorization || "";
+  const [scheme, token] = authHeader.split(" ");
+
+  if (!scheme || scheme.toLowerCase() !== "bearer" || !token) {
+    return null;
+  }
+
+  return token;
+};
+
 // ✅ CREATE ORDER
 app.post("/create-order", async (req, res) => {
   try {
-    const { amount, userId, roomId, moveInDate, occupancyIndex } = req.body;
+    const token = getBearerToken(req);
 
-    if (!amount || !userId || !roomId) {
+    if (!token) {
+      return res.status(401).json({ error: "Missing bearer token" });
+    }
+
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    const userId = decodedToken.uid;
+
+    const { amount, roomId, moveInDate, occupancyIndex } = req.body;
+
+    if (!amount || !roomId) {
       return res.status(400).json({ error: "Missing fields" });
     }
 
     const orderId = "order_" + Date.now();
+
+    const userSnap = await db.collection("users").doc(userId).get();
+    const userData = userSnap.exists ? userSnap.data() : {};
+    const customerEmail = normalizeCustomerEmail(userData.email || decodedToken.email);
+    const customerPhone = normalizeCustomerPhone(userData.phone);
+
+    if (!customerEmail || !customerPhone) {
+      return res.status(400).json({ error: "Missing valid customer phone or email in profile" });
+    }
 
     const response = await Cashfree.PGCreateOrder({
       order_id: orderId,
@@ -54,8 +98,8 @@ app.post("/create-order", async (req, res) => {
       order_currency: "INR",
       customer_details: {
         customer_id: userId,
-        customer_email: "user@gmail.com",
-        customer_phone: "+91 7054364074",
+        customer_email: customerEmail,
+        customer_phone: customerPhone,
       },
     });
 

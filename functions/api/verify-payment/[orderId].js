@@ -1,6 +1,8 @@
 import { getDocument, setDocument, updateDocument } from "../../_lib/firestore";
 import { getRequiredEnv } from "../../_lib/env";
 import { jsonResponse } from "../../_lib/http";
+import { AuthError, requireAuthUser } from "../../_lib/auth";
+import { createPurchaseNotification } from "../../_lib/notifications";
 
 const PAID_STATUS = "PAID";
 
@@ -32,6 +34,12 @@ async function ensureBookingForOrder(env, orderId, order) {
   const existingBooking = await getDocument(env, "bookings", orderId);
 
   if (existingBooking) {
+    const room = await getDocument(env, "rooms", order.roomId);
+
+    if (room) {
+      await createPurchaseNotification(env, { orderId, order, room });
+    }
+
     return true;
   }
 
@@ -58,16 +66,23 @@ async function ensureBookingForOrder(env, orderId, order) {
     createdAt: new Date()
   });
 
+  await createPurchaseNotification(env, { orderId, order, room });
+
   return true;
 }
 
-export const onRequestGet = async ({ env, params }) => {
+export const onRequestGet = async ({ request, env, params }) => {
   try {
+    const authUser = await requireAuthUser(request, env);
     const orderId = params.orderId;
     const order = await getDocument(env, "orders", orderId);
 
     if (!order) {
       return jsonResponse(env, 404, { success: false, status: "NOT_FOUND" });
+    }
+
+    if (order.userId !== authUser.uid) {
+      return jsonResponse(env, 403, { success: false, status: "FORBIDDEN" });
     }
 
     if (order.status === PAID_STATUS) {
@@ -103,6 +118,13 @@ export const onRequestGet = async ({ env, params }) => {
       status: bookingReady ? PAID_STATUS : "PAID_BOOKING_PENDING"
     });
   } catch (error) {
+    if (error instanceof AuthError) {
+      return jsonResponse(env, error.status, {
+        success: false,
+        status: "UNAUTHORIZED"
+      });
+    }
+
     console.error(error);
     return jsonResponse(env, 500, { success: false, status: "ERROR" });
   }

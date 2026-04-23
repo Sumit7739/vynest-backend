@@ -1,5 +1,6 @@
 import { getDocument, setDocument, updateDocument } from "../_lib/firestore";
 import { jsonResponse, optionsResponse } from "../_lib/http";
+import { createPurchaseNotification } from "../_lib/notifications";
 
 export const onRequestOptions = async ({ env }) => optionsResponse(env);
 
@@ -55,6 +56,12 @@ export const onRequestPost = async ({ request, env }) => {
     await updateDocument(env, "orders", orderId, {
       status: "PAID",
       paidAt: new Date()
+    });
+
+    await createPurchaseNotification(env, {
+      orderId,
+      order,
+      room
     });
 
     return jsonResponse(env, 200, { ok: true });

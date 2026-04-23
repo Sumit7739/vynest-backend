@@ -2,10 +2,9 @@ import { getRequiredEnv, validateRequiredEnv } from "../_lib/env";
 import { getDocument, setDocument } from "../_lib/firestore";
 import { jsonResponse, optionsResponse } from "../_lib/http";
 import { isValidDateInput, resolveBookingAmount } from "../_lib/payment";
+import { AuthError, requireAuthUser } from "../_lib/auth";
 
 export const onRequestOptions = async ({ env }) => optionsResponse(env);
-
-const FALLBACK_CUSTOMER_PHONE = "7054364074";
 
 const normalizeCustomerPhone = (value) => {
   const digits = String(value || "").replace(/\D/g, "");
@@ -18,38 +17,58 @@ const normalizeCustomerPhone = (value) => {
     return digits.slice(2);
   }
 
-  return FALLBACK_CUSTOMER_PHONE;
+  return null;
 };
 
-const resolveCustomerPhone = (payloadPhone, userPhone) => {
-  const normalizedPayloadPhone = normalizeCustomerPhone(payloadPhone);
-
-  if (normalizedPayloadPhone !== FALLBACK_CUSTOMER_PHONE) {
-    return normalizedPayloadPhone;
-  }
-
+const resolveCustomerPhone = (userPhone, payloadPhone) => {
   const normalizedUserPhone = normalizeCustomerPhone(userPhone);
 
-  if (normalizedUserPhone !== FALLBACK_CUSTOMER_PHONE) {
+  if (normalizedUserPhone) {
     return normalizedUserPhone;
   }
 
-  return FALLBACK_CUSTOMER_PHONE;
+  return normalizeCustomerPhone(payloadPhone);
+};
+
+const normalizeCustomerEmail = (value) => {
+  const email = String(value || "").trim().toLowerCase();
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if (isValidEmail) {
+    return email;
+  }
+
+  return null;
+};
+
+const resolveCustomerEmail = (userEmail, authEmail, payloadEmail) => {
+  const normalizedUserEmail = normalizeCustomerEmail(userEmail);
+
+  if (normalizedUserEmail) {
+    return normalizedUserEmail;
+  }
+
+  const normalizedAuthEmail = normalizeCustomerEmail(authEmail);
+
+  if (normalizedAuthEmail) {
+    return normalizedAuthEmail;
+  }
+
+  return normalizeCustomerEmail(payloadEmail);
 };
 
 export const onRequestPost = async ({ request, env }) => {
   try {
     validateRequiredEnv(env);
+    const authUser = await requireAuthUser(request, env);
 
     const payload = await request.json();
-    const { userId, roomId, moveInDate, occupancyIndex } = payload || {};
+    const { roomId, moveInDate, occupancyIndex } = payload || {};
     const parsedOccupancyIndex = Number.parseInt(occupancyIndex, 10);
 
     if (
       !payload ||
       typeof payload !== "object" ||
-      typeof userId !== "string" ||
-      !userId.trim() ||
       typeof roomId !== "string" ||
       !roomId.trim() ||
       !isValidDateInput(moveInDate) ||
@@ -61,7 +80,7 @@ export const onRequestPost = async ({ request, env }) => {
 
     const [room, user] = await Promise.all([
       getDocument(env, "rooms", roomId),
-      getDocument(env, "users", userId)
+      getDocument(env, "users", authUser.uid)
     ]);
 
     if (!room) {
@@ -79,6 +98,19 @@ export const onRequestPost = async ({ request, env }) => {
 
     if (!amount) {
       return jsonResponse(env, 400, { error: "Unable to calculate booking fee" });
+    }
+
+    const customerPhone = resolveCustomerPhone(user?.phone, payload?.customerPhone);
+    const customerEmail = resolveCustomerEmail(
+      user?.email,
+      authUser.email,
+      payload?.customerEmail
+    );
+
+    if (!customerPhone || !customerEmail) {
+      return jsonResponse(env, 400, {
+        error: "Missing valid customer phone or email in user profile"
+      });
     }
 
     const orderId = `order_${Date.now()}`;
@@ -100,8 +132,9 @@ export const onRequestPost = async ({ request, env }) => {
         order_amount: amount,
         order_currency: "INR",
         customer_details: {
-          customer_id: userId,
-          customer_phone: resolveCustomerPhone(payload?.customerPhone, user?.phone)
+          customer_id: authUser.uid,
+          customer_phone: customerPhone,
+          customer_email: customerEmail
         },
         order_meta: {
           return_url: returnUrl,
@@ -133,7 +166,7 @@ export const onRequestPost = async ({ request, env }) => {
     const cashfreeData = await cashfreeResponse.json();
 
     await setDocument(env, "orders", orderId, {
-      userId,
+      userId: authUser.uid,
       roomId,
       amount,
       amountSource: amountDecision.source,
@@ -148,6 +181,10 @@ export const onRequestPost = async ({ request, env }) => {
       payment_session_id: cashfreeData.payment_session_id
     });
   } catch (error) {
+    if (error instanceof AuthError) {
+      return jsonResponse(env, error.status, { error: error.message });
+    }
+
     console.error(error);
     return jsonResponse(env, 500, { error: "Order failed" });
   }

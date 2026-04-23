@@ -7,7 +7,7 @@ export function jsonResponse(env, status, payload) {
       "content-type": "application/json; charset=utf-8",
       "access-control-allow-origin": getBackendCorsOrigin(env),
       "access-control-allow-methods": "GET,POST,OPTIONS",
-      "access-control-allow-headers": "content-type"
+      "access-control-allow-headers": "content-type,authorization"
     }
   });
 }
@@ -18,7 +18,7 @@ export function optionsResponse(env) {
     headers: {
       "access-control-allow-origin": getBackendCorsOrigin(env),
       "access-control-allow-methods": "GET,POST,OPTIONS",
-      "access-control-allow-headers": "content-type"
+      "access-control-allow-headers": "content-type,authorization"
     }
   });
 }

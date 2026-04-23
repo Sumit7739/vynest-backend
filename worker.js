@@ -9,7 +9,7 @@ import {
 } from "./functions/api/webhook.js";
 import { onRequestGet as firestoreHealthGet } from "./functions/api/health/firestore.js";
 import { onRequestGet as verifyPaymentGet } from "./functions/api/verify-payment/[orderId].js";
-import { jsonResponse } from "./functions/_lib/http.js";
+import { jsonResponse, optionsResponse } from "./functions/_lib/http.js";
 
 function normalizePath(pathname) {
   if (pathname.length > 1 && pathname.endsWith("/")) {
@@ -60,6 +60,14 @@ export default {
 
     if ((pathname === "/health/firestore" || pathname === "/api/health/firestore") && method === "GET") {
       return firestoreHealthGet(commonContext);
+    }
+
+    if (method === "OPTIONS") {
+      const orderId = getOrderIdFromPath(pathname);
+
+      if (orderId) {
+        return optionsResponse(env);
+      }
     }
 
     if (method === "GET") {
