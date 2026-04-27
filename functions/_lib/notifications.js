@@ -20,17 +20,32 @@ export async function createPurchaseNotification(env, { orderId, order, room }) 
   const amount = toDisplayAmount(order.amount);
   const propertyName = room.propertyName || "Property";
   const roomType = room.roomDetails?.[Number(order.occupancyIndex)]?.type || "Room";
+  const [studentProfile, ownerProfile] = await Promise.all([
+    order.userId ? getDocument(env, "users", order.userId) : Promise.resolve(null),
+    room.ownerId ? getDocument(env, "users", room.ownerId) : Promise.resolve(null),
+  ]);
+
+  const studentName =
+    studentProfile?.fullName || studentProfile?.name || order.customerName || "Student";
+  const ownerName = ownerProfile?.fullName || ownerProfile?.name || "Owner";
+  const amountLabel = `INR ${amount}`;
+  const message =
+    `Amount: ${amountLabel}. Student: ${studentName}. ` +
+    `Owner: ${ownerName}. Property: ${propertyName} (${roomType}).`;
 
   await setDocument(env, "notifications", notificationId, {
     type: "PURCHASE_CREATED",
     title: "New Booking Purchase",
-    message: `Booking payment received for ${propertyName} (${roomType})`,
+    message,
     orderId,
     bookingId: orderId,
     roomId: order.roomId,
     propertyName,
     roomType,
     amount,
+    amountLabel,
+    studentName,
+    ownerName,
     currency: "INR",
     actorUserId: order.userId,
     ownerId: room.ownerId || null,
